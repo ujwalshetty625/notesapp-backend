@@ -29,7 +29,7 @@ def signup(user:UserCreate,db:Session=Depends(get_db)):
     db.refresh(new_user) #refresh the new_user object to get the id of the newly created user
     return new_user
 
-@router.post("/Login") #the endpoint for logging in a user it will take the request body as a OAuth2PasswordRequestForm model and return a JWT token
+@router.post("/login") #the endpoint for logging in a user it will take the request body as a OAuth2PasswordRequestForm model and return a JWT token
 def login(form_data:OAuth2PasswordRequestForm=Depends(),db:Session=Depends(get_db)):
     user=db.query(User).filter(User.email==form_data.username).first() #check if the user exists in the database by querying the User table and filtering by email
     if not user or not verify_password(form_data.password,user.password):
