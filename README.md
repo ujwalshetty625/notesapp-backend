@@ -1,69 +1,183 @@
-# Notes-app-Backend
+# Notes App Backend
 
-A personal notes API built with FastAPI and PostgreSQL. Supports user auth with JWT and full CRUD on notes — each user only ever sees their own.
+A full-stack Notes application backend built with **FastAPI** and **PostgreSQL** featuring JWT authentication, secure password hashing, and complete CRUD operations. Each user can only access and manage their own notes through protected API endpoints.
 
-Built this to get my hands dirty with backend development. No fluff, just a clean working API.
-
----
-
-## Stack
-
-FastAPI · PostgreSQL · SQLAlchemy · Alembic · JWT · bcrypt · Pydantic
+Built as my first backend project to understand REST APIs, authentication, database design, ORM, migrations, and deployment from scratch.
 
 ---
 
-## What it does
+## Tech Stack
 
-- Signup / Login with hashed passwords
-- JWT auth with expiry
-- Create, read, update, delete notes
-- Users can only touch their own notes
+- FastAPI
+- PostgreSQL (Neon)
+- SQLAlchemy
+- Alembic
+- Pydantic
+- JWT Authentication
+- bcrypt (Password Hashing)
+- Uvicorn
+- Render (Backend Deployment)
+- Vercel (Frontend Deployment)
 
 ---
 
-## Endpoints
+## Features
+
+- User registration with hashed passwords
+- Secure login using JWT authentication
+- Protected API endpoints
+- Create, Read, Update & Delete notes
+- User-specific note ownership
+- Database migrations using Alembic
+- RESTful API design
+- CORS enabled for frontend integration
+
+---
+
+## Live Demo
+
+### Frontend
+ https://lemme-take-some-notes.vercel.app
+
+### Backend API
+ https://notesapp-backend-8pzp.onrender.com
+
+### API Documentation (Swagger)
+ https://notesapp-backend-8pzp.onrender.com/docs
+
+> **Note:** The backend is hosted on Render's free tier. The first request after inactivity may take around 30–60 seconds while the server wakes up.
+
+---
+
+## API Endpoints
+
+### Authentication
+
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| POST | `/signup` | Register a new user |
+| POST | `/login` | Login and receive JWT token |
+
+### Notes
+
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| POST | `/notes` | Create a note |
+| GET | `/notes` | Get all notes for the logged-in user |
+| GET | `/notes/{id}` | Get a specific note |
+| PUT | `/notes/{id}` | Update a note |
+| DELETE | `/notes/{id}` | Delete a note |
+
+All **/notes** endpoints require:
 
 ```
-POST   /signup          Register
-POST   /login           Get JWT token
-
-POST   /notes           Create a note
-GET    /notes           Get your notes
-GET    /notes/{id}      Get one note
-PUT    /notes/{id}      Update a note
-DELETE /notes/{id}      Delete a note
+Authorization: Bearer <JWT_TOKEN>
 ```
-
-All `/notes` routes require `Authorization: Bearer <token>` in the header.
 
 ---
 
-## Run it locally
+## Project Structure
+
+```
+backend-notesapp/
+│
+├── routes/
+│   ├── users.py
+│   └── notes.py
+│
+├── alembic/
+│
+├── auth.py
+├── database.py
+├── main.py
+├── models.py
+├── schemas.py
+├── requirements.txt
+└── .env
+```
+
+---
+
+## Run Locally
+
+Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
-cd notes-app
+git clone https://github.com/ujwalshetty625/notesapp-backend.git
+cd notesapp-backend
+```
 
+Create and activate a virtual environment
+
+```bash
 python -m venv venv
-venv\Scripts\activate
+```
 
+Windows
+
+```bash
+venv\Scripts\activate
+```
+
+Install dependencies
+
+```bash
 pip install -r requirements.txt
 ```
 
-Create a `.env` file:
+Create a `.env` file
 
-```
+```env
 DATABASE_URL=postgresql://username:password@localhost:5432/notesapp
 SECRET_KEY=your_secret_key
 ```
 
+Run database migrations
+
 ```bash
 alembic upgrade head
+```
+
+Start the server
+
+```bash
 uvicorn main:app --reload
 ```
 
-Swagger UI at `http://127.0.0.1:8000/docs`
+Visit:
+
+```
+http://127.0.0.1:8000/docs
+```
 
 ---
 
-## Live API
+## What I Learned
+
+This project helped me understand:
+
+- FastAPI architecture
+- REST API development
+- SQLAlchemy ORM
+- PostgreSQL integration
+- JWT authentication
+- Password hashing with bcrypt
+- Database migrations using Alembic
+- Dependency Injection (`Depends`)
+- CORS configuration
+- Backend deployment using Render
+- Frontend deployment using Vercel
+- Integrating a frontend with a production backend
+
+---
+
+## Future Improvements
+
+- Search notes
+- Categories / Tags
+- Rich text editor
+- File attachments
+- Rate limiting
+- Unit tests
+- Docker support
+- CI/CD with GitHub Actions
